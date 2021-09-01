@@ -31,18 +31,22 @@ def delete_image(path):
         print("The file does not exist")
 
 
-@app.route('/api/resume_photo/rembg', methods=['POST'])
+@app.route('/api/resume_photo/remove_background', methods=['POST'])
 def remove_background():
     photo = request.files['photo']
     id = request.form['id']
 
     input_path = f'./examples/{id}_in.jpg'
+    output_path = f'./examples/{id}_out.png'
 
     with open(input_path, 'wb') as f:
         f.write(photo.read())
 
     f = np.fromfile(input_path)
     result = remove(f)
+
+    pil_img = Image.open(io.BytesIO(result))
+    pil_img.save(output_path)
 
     encoded_img = transform_encoded_image(result, "RGBA")
 
@@ -59,10 +63,12 @@ def background_synthesis_solid():
 
     color = tuple(map(int, solid_color.split(', '))) # str to tuple
 
-    input_path = f'./examples/{id}_color.png'
+    input_path = f'./examples/{id}_out.png'
 
-    with open(input_path, 'wb') as f:
-        f.write(photo.read())
+    # TODO: photo로 받은 사진이 배경이 검정으로 되는 문제
+    # input_path = f'./examples/{id}_color.png'
+    # with open(input_path, 'wb') as f:
+    #     f.write(photo.read())
 
     f = np.fromfile(input_path)
     with Image.open(io.BytesIO(f)).convert("RGBA") as fg:
@@ -70,7 +76,6 @@ def background_synthesis_solid():
             canvas_img = Image.alpha_composite(bg, fg)
             canvas_img = canvas_img.convert('RGB')
             canvas_img.save(input_path, 'JPEG', quality=95)
-    # TODO: 배경 합성 시, 배경이 검정으로 되는 문제
 
     file = np.fromfile(input_path)
     encoded_img = transform_encoded_image(file, "RGB")
