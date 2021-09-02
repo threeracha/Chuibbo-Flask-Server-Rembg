@@ -90,11 +90,13 @@ def background_synthesis_gradation():
     id = request.form['id']
     gradation_photo = request.files['gradation_photo']
 
-    input_path = f'./examples/{id}_input.png'
+    # input_path = f'./examples/{id}_input.png'
+    input_path = f'./examples/{id}_out.png'
     output_path = f'./examples/{id}_gradation.png'
 
-    with open(input_path, 'wb') as f:
-        f.write(photo.read())
+    # TODO: photo로 받은 사진이 배경이 검정으로 되는 문제
+    # with open(input_path, 'wb') as f:
+    #     f.write(photo.read())
     with open(output_path, 'wb') as f:
         f.write(gradation_photo.read())
 
