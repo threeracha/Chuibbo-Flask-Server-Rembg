@@ -1,6 +1,5 @@
 ## API
-![Chuibbo-Flask-Rembg Swagger UI](https://user-images.githubusercontent.com/43838022/158012199-ff4ac412-79c8-4f3b-be36-51dc1355fb4c.png)
-
+![Chuibbo-Flask-Rembg Swagger UI](https://user-images.githubusercontent.com/43838022/159553657-dabd35be-ea90-427b-9e64-c1d5cfa56364.png)
 
 # Rembg
 
